@@ -29,10 +29,16 @@ var Luviz;
             var Items = (function () {
                 function Items(items) {
                     var _this = this;
+                    this._items = [];
                     $.each(items, function (ix, data) {
                         _this._items[ix] = new Search.Item(data);
                     });
                 }
+                Items.prototype.log = function () {
+                    console.log(this._items);
+                };
+                Items.prototype.getCard = function () {
+                };
                 return Items;
             }());
             Search.Items = Items;
@@ -46,8 +52,13 @@ var Luviz;
         var Core = (function () {
             function Core() {
             }
-            Core.GitSearch = function (q) {
-                $.getJSON(this._urlSearch + q, function () {
+            ;
+            Core.prototype.GitSearch = function (q) {
+                var _this = this;
+                $.getJSON(Core._urlSearch + q, function (data) {
+                    _this.repositories = new GitHub.Search.Items(data.items);
+                    console.log(_this.repositories);
+                    console.log(data);
                 });
             };
             Core._urlSearch = "https://api.github.com/search/repositories?q=";
