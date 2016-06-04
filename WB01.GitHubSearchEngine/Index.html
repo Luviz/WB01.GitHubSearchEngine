@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8" />
+	<link href="Content/fabric.min.css" rel="stylesheet" />
+	<link href="Content/fabric.components.min.css" rel="stylesheet" />
+	<script src="scripts/jquery-2.2.3.min.js"></script>
+	<script src="scripts/jquery.fabric.min.js"></script>
+	<script src="scripts/knockout-3.4.0.js"></script>
+</head>
+<body>
+	<div id="DOM" class="ms-Grid">
+		<div class="ms-Grid-row">
+			<div class="ms-Grid-col ms-u-md12" ">
+				<input type="text" class="ms-TextField-field" value="pnp" id="SearchBar-Input" placeholder="Search Repositories" />
+			</div>
+		</div>
+		<div class="ms-Grid-row">
+			<div data-bind="foreach: repositories">
+				a
+			</div>
+		</div>
+
+	</div>
+	<script src="scripts/Luviz/Luviz.GitHub.SearchViewModel.js"></script>
+	<script>
+		/*SearchBox*/
+		var $SearchBox = $("#SearchBar-Input");
+		var repoSearch = new Luviz.GitHub.Search();
+		$SearchBox.on("input", function () {
+			console.log("Meh")
+			if ($SearchBox.val().length > 2) {
+				console.log($SearchBox.val());
+				repoSearch.GitSearch($SearchBox.val());
+			}
+		});
+		var DOM = document.getElementById("DOM");
+		ko.applyBindings(repoSearch.GitSearch("pnp"), DOM);
+
+	</script>
+</body>
+</html>
