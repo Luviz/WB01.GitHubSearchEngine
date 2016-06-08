@@ -90,10 +90,10 @@ var Luviz;
             function Repositories(fullName) {
                 var _this = this;
                 this.ApiUrl = "https://api.github.com/repos/";
-                console.log("ctor.fullName: " + fullName);
+                //console.log("ctor.fullName: " + fullName);
                 $.getJSON(this.ApiUrl + fullName, function (data) {
-                    console.log(data);
-                    console.log(data.owner.login);
+                    //console.log(data);
+                    //console.log(data.owner.login);
                     _this.Repo = data;
                     $('#mRepoTitle').text(data.name);
                     _this.UpdateCard();
@@ -110,7 +110,7 @@ var Luviz;
                 $("#ISubs>span").text(this.Repo.subscribers_count);
                 //Collaborators
                 $.getJSON(this.Repo.contributors_url, function (data) {
-                    //	console.log(data);
+                    //console.log(data);
                     var $clabList = $('#clabList');
                     $clabList.empty();
                     if (data != null) {
@@ -124,10 +124,10 @@ var Luviz;
                 });
                 //Issues
                 $.getJSON(this.Repo.url + "/issues", function (data) {
-                    console.log(data);
+                    //console.log(data);
                     var $issuList = $('#issuList');
                     $issuList.empty();
-                    console.log(_this.Repo.has_issues);
+                    //console.log(this.Repo.has_issues);
                     if (data.length > 0) {
                         $.each(data, function (i, issue) {
                             $issuList.append('<span class="ms-ListItem-secondaryText">' + issue.title + '</span>');
@@ -140,13 +140,15 @@ var Luviz;
             };
             Repositories.prototype.GetUserCard = function (user) {
                 var $card = $("");
+                var onclickHref = user.html_url;
                 //Owner
-                var $card = $('<span class="ms-ListItem-secondaryText">');
+                var $card = $('<span class="ms-ListItem-secondaryText user">');
                 var ImgUrl = user["avatar_url"];
                 var $userImg = $('<img class="user-img" src="' + ImgUrl + '" />');
                 $userImg.appendTo($card);
                 $card.append(user["login"]);
                 $card.appendTo($card);
+                $card.click(function () { window.open(onclickHref); });
                 return $card;
             };
             Repositories.prototype.GetIssueCard = function (issue) {
@@ -170,14 +172,14 @@ var Luviz;
                 //Add spin!
                 $.getJSON(Core._urlSearch + q, function (data) {
                     _this.repositories = new GitHub.Search.Items(data.items);
-                    console.log(_this.repositories);
-                    console.log(data);
+                    //console.log(this.repositories);
+                    //console.log(data);
                     //Clear Containor
                     $("#container").append(_this.repositories.getCards());
                 });
             };
             Core.GetDetail = function (fullName) {
-                console.log("GetDetail " + fullName);
+                //console.log("GetDetail " + fullName);	
                 var repo = new GitHub.Repositories(fullName);
             };
             Core._urlSearch = "https://api.github.com/search/repositories?q=";

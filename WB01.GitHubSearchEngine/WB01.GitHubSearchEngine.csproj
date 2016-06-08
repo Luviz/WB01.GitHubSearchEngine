@@ -103,7 +103,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="scripts\jquery-2.2.3.min.map" />
-    <Content Include="scripts\Luviz\Luviz.GitHub.SearchViewModel.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -168,7 +167,6 @@
     <TypeScriptCompile Include="scripts\Luviz\GitHub\Repositories.ts" />
     <TypeScriptCompile Include="scripts\Luviz\GitHub\Search\Item.ts" />
     <TypeScriptCompile Include="scripts\Luviz\GitHub\Search\Items.ts" />
-    <TypeScriptCompile Include="scripts\Luviz\Luviz.GitHub.SearchBox.ts" />
     <Content Include="Web.config" />
     <TypeScriptCompile Include="scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="scripts\typings\knockout\knockout.d.ts" />

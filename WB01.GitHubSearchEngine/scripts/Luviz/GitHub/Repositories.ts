@@ -3,10 +3,10 @@
 		Repo: any;
 		ApiUrl = "https://api.github.com/repos/";
 		constructor(fullName) {
-			console.log("ctor.fullName: " + fullName);
+			//console.log("ctor.fullName: " + fullName);
 			$.getJSON(this.ApiUrl + fullName, (data) => {
-				console.log(data);
-				console.log(data.owner.login);
+				//console.log(data);
+				//console.log(data.owner.login);
 				this.Repo = data;
 				$('#mRepoTitle').text(data.name);
 				this.UpdateCard();
@@ -24,7 +24,7 @@
 			$("#ISubs>span").text(this.Repo.subscribers_count);
 			//Collaborators
 			$.getJSON(this.Repo.contributors_url, (data) => {
-				//	console.log(data);
+				//console.log(data);
 				var $clabList = $('#clabList');
 				$clabList.empty();
 				if (data != null) {
@@ -39,10 +39,10 @@
 			});
 			//Issues
 			$.getJSON(this.Repo.url + "/issues", (data) => {
-				console.log(data);
+				//console.log(data);
 				var $issuList = $('#issuList');
 				$issuList.empty();
-				console.log(this.Repo.has_issues);
+				//console.log(this.Repo.has_issues);
 				if (data.length > 0) {
 					$.each(data, (i, issue) => {
 
@@ -57,15 +57,16 @@
 
 		GetUserCard(user) {
 			var $card = $("")
+			var onclickHref = user.html_url
 
 			//Owner
-			var $card = $('<span class="ms-ListItem-secondaryText">');
+			var $card = $('<span class="ms-ListItem-secondaryText user">');
 			var ImgUrl = user["avatar_url"];
 			var $userImg = $('<img class="user-img" src="' + ImgUrl + '" />');
 			$userImg.appendTo($card);
 			$card.append(user["login"]);
 			$card.appendTo($card);
-
+			$card.click(() => { window.open(onclickHref); });
 			return $card;
 		}
 

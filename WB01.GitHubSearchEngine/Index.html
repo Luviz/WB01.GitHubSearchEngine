@@ -21,7 +21,7 @@
 	<div id="DOM" class="ms-Grid">
 		<div class="ms-Grid-row">
 			<div class="ms-Grid-col ms-u-md12">
-				<input type="text" class="ms-TextField-field"  id="SearchBar-Input" placeholder="Search Repositories [enter]" />
+				<input type="text" class="ms-TextField-field" id="SearchBar-Input" placeholder="Search Repositories [enter]" />
 			</div>
 		</div>
 		<div class="ms-Grid-row">
@@ -33,7 +33,7 @@
 		</div>
 
 	</div>
-	
+
 	<!-- Modal -->
 	<div class="modal fade" id="dModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog modal-lg" role="document">
@@ -62,16 +62,16 @@
 								<span class="ms-ListItem-primaryText">Collaborators</span>
 								<hr />
 								<div id="clabList">
-									
+									<!-- to be genrated -->
 								</div>
 							</div>
 							<div class="ms-Grid-col ms-u-md4">
 								<span class="ms-ListItem-primaryText">Issues</span>
-									<hr />
-									<div id="issuList">
-
-									</div>
-</div>
+								<hr />
+								<div id="issuList">
+									<!-- to be genrated -->
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -85,8 +85,8 @@
 	</div>
 	<script src="scripts/Luviz.Core.js"></script>
 	<script>
-		/*SearchBox*/
 		var $SearchBox = $("#SearchBar-Input");
+		/*SearchBox - run on enter*/
 		$SearchBox.keyup(function (event) {
 			if (event.keyCode == 13) {
 				console.log($SearchBox.val());
@@ -94,8 +94,33 @@
 			}
 		});
 
+		/*SearchBox run post 1sec delay*/
+		//setup before functions
+		var typingTimer;                //timer identifier
+		var doneTypingInterval = 1000;  
 
+		//on keyup, start the countdown
+		$SearchBox.on('keyup', function () {
+			clearTimeout(typingTimer);
+			typingTimer = setTimeout(doneTyping, doneTypingInterval);
+		});
 
+		//on keydown, clear the countdown 
+		$SearchBox.on('keydown', function () {
+			clearTimeout(typingTimer);
+		});
+
+		//user is "finished typing," do something
+		function doneTyping() {
+			//check if it has value
+			if ($SearchBox.val().length > 0) {
+				new Luviz.GitHub.Core().GitSearch($SearchBox.val());
+			} else {
+				//clear if not
+				$("#container").empty();
+			}
+		}
+	
 	</script>
 </body>
 </html>
