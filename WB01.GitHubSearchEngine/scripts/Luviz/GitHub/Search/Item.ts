@@ -22,7 +22,7 @@
 			this.lastUpdate = new Date(item.updated_at);
 		}
 		getCard() {
-			var $card = $('<li class="ms-ListItem is-selectable" >');
+			var $card = $('<li class="ms-ListItem is-selectable" data-toggle="modal" data-target="#dModal" onclick="Luviz.GitHub.Core.GetDetail(\''+this.fullName+'\')" >');
 			
 			var $namePlate = $('<span class="ms-ListItem-primaryText">');
 			$namePlate.text(this.name);
@@ -31,7 +31,7 @@
 			//Owner
 			var $ownerPlate = $('<span class="ms-ListItem-secondaryText">');
 			var ImgUrl = this.owner["avatar_url"];
-			var $ownerImg = $('<img src="' + ImgUrl+ '" style="max-height:1em; margin-right:1px" />');
+			var $ownerImg = $('<img src="' + ImgUrl+ '"/>');
 			$ownerImg.appendTo($ownerPlate);
 			$ownerPlate.append(this.owner["login"]);
 			$ownerPlate.appendTo($card);
@@ -50,8 +50,9 @@
 			$update.appendTo($card);
 
 			//ActionBar
+			var url = "http://github.com/" + this.fullName; 
 			var $ActionBar = $('<div class="ms-ListItem-actions">');
-			$ActionBar.append('<div class="ms-ListItem-action"><img src="http://pritishc.com/images/social/github.png" style="height:1.75em"/></div>');
+			$ActionBar.append('<div class="ms-ListItem-action"><img onclick="window.open(\'' + url +'\')" src="http://pritishc.com/images/social/github.png" style="height:1.75em"/></div>');
 			$ActionBar.appendTo($card);
 
 			return $card;

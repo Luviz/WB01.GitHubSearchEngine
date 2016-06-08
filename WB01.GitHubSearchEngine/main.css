@@ -1,0 +1,20 @@
+﻿
+#SearchBar-Input{
+	margin-top: 25px;
+}
+
+#container li .ms-ListItem-secondaryText {
+	margin-top: 2px;
+	margin-bottom: 4px;
+
+}
+
+#container li .ms-ListItem-secondaryText > img {
+	max-height: 1.5em;
+	margin-right: 3px;
+}
+
+.user-img{
+	max-height: 2em;
+	padding-right:1em;
+}

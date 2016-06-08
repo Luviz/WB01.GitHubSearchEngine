@@ -6,77 +6,95 @@
 	<link href="Content/fabric.min.css" rel="stylesheet" />
 	<link href="Content/fabric.components.min.css" rel="stylesheet" />
 	<script src="scripts/jquery-2.2.3.min.js"></script>
-	<script src="scripts/jquery.fabric.min.js"></script>
-	<script src="scripts/knockout-3.4.0.js"></script>
+	<script src="scripts/jquery.fabric.js"></script>
+	<link href="main.css" rel="stylesheet" />
+	<!-- BOOTSTRAP -->
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </head>
 <body>
+
 	<div id="DOM" class="ms-Grid">
 		<div class="ms-Grid-row">
-			<div class="ms-Grid-col ms-u-md12" ">
-				<input type="text" class="ms-TextField-field" value="pnp" id="SearchBar-Input" placeholder="Search Repositories" />
+			<div class="ms-Grid-col ms-u-md12">
+				<input type="text" class="ms-TextField-field"  id="SearchBar-Input" placeholder="Search Repositories [enter]" />
 			</div>
 		</div>
 		<div class="ms-Grid-row">
 			<div class="ms-Grid-col ms-u-md3 ">
 			</div>
-			<div id="container" class="ms-Grid-col ms-u-lg6" >
-				<ul class="ms-List" id="debug">
-					<li class="ms-ListItem is-selectable">
-						<span class="ms-ListItem-primaryText">repo Name </span>
-						<span class="ms-ListItem-secondaryText">
-							<img src="https://avatars.githubusercontent.com/u/6789362?v=3" style="max-height:1em; margin-top:1px" />
-							Owner
-						</span>
-						<span class="ms-ListItem-tertiaryText">
-							Lang
-						</span>
-						<span class="ms-ListItem-metaText">
-							date
-						</span>
-						<div class="ms-ListItem-actions">
-							<div class="ms-ListItem-action"><i class="ms-Icon ms-Icon--mail"></i></div>
-							<div class="ms-ListItem-action"><i class="ms-Icon ms-Icon--trash"></i></div>
-							<div class="ms-ListItem-action"><i class="ms-Icon ms-Icon--flag"></i></div>
-							<div class="ms-ListItem-action"><i class="ms-Icon ms-Icon--pinLeft"></i></div>
-						</div>
-					</li>
-					<li class="ms-ListItem is-selectable">
-						<span class="ms-ListItem-primaryText">pnp </span>
-						<span class="ms-ListItem-secondaryText">
-							<img src="https://avatars.githubusercontent.com/u/6789362?v=3" style="max-height:1em; margin-top:1px" />
-							OfficeDev
-						</span>
-						<span class="ms-ListItem-tertiaryText">
-							C#
-						</span>
-						<span class="ms-ListItem-metaText">
-							date
-						</span>
-						<div class="ms-ListItem-actions">
-								<a src="#">
-							<div class="ms-ListItem-action">
-									<img src="http://pritishc.com/images/social/github.png" style="height:1.75em" />
-							</div>
-								</a>
-						</div>
-					</li>
-				</ul>
-				<hr />
+			<div id="container" class="ms-Grid-col ms-u-lg6">
+
 			</div>
 		</div>
 
 	</div>
-	<script src="scripts/Luviz.Core.js"></script>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="dModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title ms-ListItem-primaryText" id="mRepoTitle">
+						<b>Repo title</b>
+					</h4>
+				</div>
+				<div id="mBody" class="modal-body">
+					<div class="ms-Grid">
+						<div class="ms-Grid-row">
+							<div class="ms-Grid-col ms-u-md4">
+								<span class="ms-ListItem-primaryText">Information</span>
+								<hr />
+								<div class="ms-ListItem-primaryText ms-font-l" id="IOwner">
+									Unkonwn
+								</div>
+								<div id="IFork">Forks: <span></span> </div>
+								<div id="IWatc">Watchers: <span></span></div>
+								<div id="ILang">Language: <span></span></div>
+								<div id="ISubs">Subscribers: <span></span></div>
+							</div>
+							<div class="ms-Grid-col ms-u-md4">
+								<span class="ms-ListItem-primaryText">Collaborators</span>
+								<hr />
+								<div id="clabList">
+									
+								</div>
+							</div>
+							<div class="ms-Grid-col ms-u-md4">
+								<span class="ms-ListItem-primaryText">Issues</span>
+									<hr />
+									<div id="issuList">
 
+									</div>
+</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="ms-Button ms-Button--primary">
+						<span class="ms-Button-label">To Repositori</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="scripts/Luviz.Core.js"></script>
 	<script>
 		/*SearchBox*/
 		var $SearchBox = $("#SearchBar-Input");
-		$SearchBox.keyup(function(event){
+		$SearchBox.keyup(function (event) {
 			if (event.keyCode == 13) {
 				console.log($SearchBox.val());
 				new Luviz.GitHub.Core().GitSearch($SearchBox.val());
 			}
 		});
+
+
 
 	</script>
 </body>

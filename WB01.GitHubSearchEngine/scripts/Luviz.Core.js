@@ -17,14 +17,14 @@ var Luviz;
                     this.lastUpdate = new Date(item.updated_at);
                 }
                 Item.prototype.getCard = function () {
-                    var $card = $('<li class="ms-ListItem is-selectable" >');
+                    var $card = $('<li class="ms-ListItem is-selectable" data-toggle="modal" data-target="#dModal" onclick="Luviz.GitHub.Core.GetDetail(\'' + this.fullName + '\')" >');
                     var $namePlate = $('<span class="ms-ListItem-primaryText">');
                     $namePlate.text(this.name);
                     $namePlate.appendTo($card);
                     //Owner
                     var $ownerPlate = $('<span class="ms-ListItem-secondaryText">');
                     var ImgUrl = this.owner["avatar_url"];
-                    var $ownerImg = $('<img src="' + ImgUrl + '" style="max-height:1em; margin-right:1px" />');
+                    var $ownerImg = $('<img src="' + ImgUrl + '"/>');
                     $ownerImg.appendTo($ownerPlate);
                     $ownerPlate.append(this.owner["login"]);
                     $ownerPlate.appendTo($card);
@@ -40,8 +40,9 @@ var Luviz;
                     $update.text(date);
                     $update.appendTo($card);
                     //ActionBar
+                    var url = "http://github.com/" + this.fullName;
                     var $ActionBar = $('<div class="ms-ListItem-actions">');
-                    $ActionBar.append('<div class="ms-ListItem-action"><img src="http://pritishc.com/images/social/github.png" style="height:1.75em"/></div>');
+                    $ActionBar.append('<div class="ms-ListItem-action"><img onclick="window.open(\'' + url + '\')" src="http://pritishc.com/images/social/github.png" style="height:1.75em"/></div>');
                     $ActionBar.appendTo($card);
                     return $card;
                 };
@@ -85,6 +86,80 @@ var Luviz;
 (function (Luviz) {
     var GitHub;
     (function (GitHub) {
+        var Repositories = (function () {
+            function Repositories(fullName) {
+                var _this = this;
+                this.ApiUrl = "https://api.github.com/repos/";
+                console.log("ctor.fullName: " + fullName);
+                $.getJSON(this.ApiUrl + fullName, function (data) {
+                    console.log(data);
+                    console.log(data.owner.login);
+                    _this.Repo = data;
+                    $('#mRepoTitle').text(data.name);
+                    _this.UpdateCard();
+                });
+            }
+            Repositories.prototype.UpdateCard = function () {
+                var _this = this;
+                //Setting the the new url for the model
+                $(".modal-footer > a").attr("href", this.Repo.html_url);
+                $("#IOwner").text(this.Repo.owner.login);
+                $("#IFork>span").text(this.Repo.forks);
+                $("#IWatc>span").text(this.Repo.watchers);
+                $("#ILang>span").text(this.Repo.language);
+                $("#ISubs>span").text(this.Repo.subscribers_count);
+                //Collaborators
+                $.getJSON(this.Repo.contributors_url, function (data) {
+                    //	console.log(data);
+                    var $clabList = $('#clabList');
+                    $clabList.empty();
+                    if (data != null) {
+                        $.each(data, function (i, user) {
+                            $clabList.append(_this.GetUserCard(user));
+                        });
+                    }
+                    else {
+                        $clabList.text("No body Found :(");
+                    }
+                });
+                //Issues
+                $.getJSON(this.Repo.url + "/issues", function (data) {
+                    console.log(data);
+                    var $issuList = $('#issuList');
+                    $issuList.empty();
+                    console.log(_this.Repo.has_issues);
+                    if (data.length > 0) {
+                        $.each(data, function (i, issue) {
+                            $issuList.append('<span class="ms-ListItem-secondaryText">' + issue.title + '</span>');
+                        });
+                    }
+                    else {
+                        $issuList.text("No ISSUES Here!!!!!");
+                    }
+                });
+            };
+            Repositories.prototype.GetUserCard = function (user) {
+                var $card = $("");
+                //Owner
+                var $card = $('<span class="ms-ListItem-secondaryText">');
+                var ImgUrl = user["avatar_url"];
+                var $userImg = $('<img class="user-img" src="' + ImgUrl + '" />');
+                $userImg.appendTo($card);
+                $card.append(user["login"]);
+                $card.appendTo($card);
+                return $card;
+            };
+            Repositories.prototype.GetIssueCard = function (issue) {
+            };
+            return Repositories;
+        }());
+        GitHub.Repositories = Repositories;
+    })(GitHub = Luviz.GitHub || (Luviz.GitHub = {}));
+})(Luviz || (Luviz = {}));
+var Luviz;
+(function (Luviz) {
+    var GitHub;
+    (function (GitHub) {
         var Core = (function () {
             function Core() {
             }
@@ -100,6 +175,10 @@ var Luviz;
                     //Clear Containor
                     $("#container").append(_this.repositories.getCards());
                 });
+            };
+            Core.GetDetail = function (fullName) {
+                console.log("GetDetail " + fullName);
+                var repo = new GitHub.Repositories(fullName);
             };
             Core._urlSearch = "https://api.github.com/search/repositories?q=";
             return Core;
