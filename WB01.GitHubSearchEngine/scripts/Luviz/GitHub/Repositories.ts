@@ -111,6 +111,7 @@
 			//onClick
 			$card.click(() => { window.open(issue.html_url); });
 			return $card;
+
 		}
 
 
