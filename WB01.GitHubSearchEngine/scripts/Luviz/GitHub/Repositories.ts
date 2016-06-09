@@ -2,6 +2,9 @@
 	export class Repositories {
 		Repo: any;
 		ApiUrl = "https://api.github.com/repos/";
+
+		monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Novr", "Dec"];
+
 		constructor(fullName) {
 			//console.log("ctor.fullName: " + fullName);
 			$.getJSON(this.ApiUrl + fullName, (data) => {
@@ -46,7 +49,7 @@
 				if (data.length > 0) {
 					$.each(data, (i, issue) => {
 
-						$issuList.append('<span class="ms-ListItem-secondaryText">' + issue.title + '</span>')
+						$issuList.append(this.GetIssueCard(issue));
 					});
 				} else {
 					$issuList.text("No ISSUES Here!!!!!")
@@ -59,7 +62,7 @@
 			var $card = $("")
 			var onclickHref = user.html_url
 
-			//Owner
+			//User
 			var $card = $('<span class="ms-ListItem-secondaryText user">');
 			var ImgUrl = user["avatar_url"];
 			var $userImg = $('<img class="user-img" src="' + ImgUrl + '" />');
@@ -67,11 +70,47 @@
 			$card.append(user["login"]);
 			$card.appendTo($card);
 			$card.click(() => { window.open(onclickHref); });
+
+			//contributions
+			var $tribut = $('<div class="ms-ListItem-tertiaryText">');
+			$tribut.hide();
+			$tribut.append("Contributions: " + user.contributions);
+			$tribut.append("<br>");
+			$tribut.append("Is an Admin: " + user.site_admin);
+			$tribut.appendTo($card);
+
+			//onhover
+			$card.on("mouseenter", () => { $tribut.show("fast"); });
+			$card.on("mouseleave", () => { $tribut.hide("fast"); });
+
 			return $card;
 		}
 
-		GetIssueCard(issue) {
 
+
+		GetIssueCard(issue) {
+			var $card = $('<span class="ms-ListItem-secondaryText">');
+			$card.append(issue.title);
+
+			//contributions
+			var $info = $('<div class="ms-ListItem-tertiaryText">');
+			$info.hide();
+			var createdAt: Date = new Date(issue.created_at);
+			var date: string = createdAt.getFullYear() + "-" +
+				this.monthNames[createdAt.getMonth()] + "-" +
+				createdAt.getDate();
+			$info.append("User: " +issue.user.login);
+			$info.append("<br>");
+			$info.append("Created At: " + date);
+			$info.appendTo($card);
+
+			//onhover
+			$card.on("mouseenter", () => { $info.show("fast"); });
+			$card.on("mouseleave", () => { $info.hide("fast"); });
+
+			//onClick
+			$card.click(() => { window.open(issue.html_url); });
+			return $card;
 		}
 
 

@@ -160,8 +160,6 @@
     <Content Include="scripts\jquery-2.2.3.min.js" />
     <Content Include="scripts\jquery.fabric.js" />
     <Content Include="scripts\jquery.fabric.min.js" />
-    <Content Include="scripts\knockout-3.4.0.debug.js" />
-    <Content Include="scripts\knockout-3.4.0.js" />
     <Content Include="tsconfig.json" />
     <TypeScriptCompile Include="scripts\Luviz\GitHub\Core.ts" />
     <TypeScriptCompile Include="scripts\Luviz\GitHub\Repositories.ts" />

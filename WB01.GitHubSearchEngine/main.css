@@ -24,3 +24,7 @@
 	max-height: 2em;
 	padding-right:1em;
 }
+
+#clabList span > div{
+	padding-top:5px;
+}

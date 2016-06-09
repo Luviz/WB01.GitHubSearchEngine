@@ -90,6 +90,7 @@ var Luviz;
             function Repositories(fullName) {
                 var _this = this;
                 this.ApiUrl = "https://api.github.com/repos/";
+                this.monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Novr", "Dec"];
                 //console.log("ctor.fullName: " + fullName);
                 $.getJSON(this.ApiUrl + fullName, function (data) {
                     //console.log(data);
@@ -130,7 +131,7 @@ var Luviz;
                     //console.log(this.Repo.has_issues);
                     if (data.length > 0) {
                         $.each(data, function (i, issue) {
-                            $issuList.append('<span class="ms-ListItem-secondaryText">' + issue.title + '</span>');
+                            $issuList.append(_this.GetIssueCard(issue));
                         });
                     }
                     else {
@@ -141,7 +142,7 @@ var Luviz;
             Repositories.prototype.GetUserCard = function (user) {
                 var $card = $("");
                 var onclickHref = user.html_url;
-                //Owner
+                //User
                 var $card = $('<span class="ms-ListItem-secondaryText user">');
                 var ImgUrl = user["avatar_url"];
                 var $userImg = $('<img class="user-img" src="' + ImgUrl + '" />');
@@ -149,9 +150,38 @@ var Luviz;
                 $card.append(user["login"]);
                 $card.appendTo($card);
                 $card.click(function () { window.open(onclickHref); });
+                //contributions
+                var $tribut = $('<div class="ms-ListItem-tertiaryText">');
+                $tribut.hide();
+                $tribut.append("Contributions: " + user.contributions);
+                $tribut.append("<br>");
+                $tribut.append("Is an Admin: " + user.site_admin);
+                $tribut.appendTo($card);
+                //onhover
+                $card.on("mouseenter", function () { $tribut.show("fast"); });
+                $card.on("mouseleave", function () { $tribut.hide("fast"); });
                 return $card;
             };
             Repositories.prototype.GetIssueCard = function (issue) {
+                var $card = $('<span class="ms-ListItem-secondaryText">');
+                $card.append(issue.title);
+                //contributions
+                var $info = $('<div class="ms-ListItem-tertiaryText">');
+                $info.hide();
+                var createdAt = new Date(issue.created_at);
+                var date = createdAt.getFullYear() + "-" +
+                    this.monthNames[createdAt.getMonth()] + "-" +
+                    createdAt.getDate();
+                $info.append("User: " + issue.user.login);
+                $info.append("<br>");
+                $info.append("Created At: " + date);
+                $info.appendTo($card);
+                //onhover
+                $card.on("mouseenter", function () { $info.show("fast"); });
+                $card.on("mouseleave", function () { $info.hide("fast"); });
+                //onClick
+                $card.click(function () { window.open(issue.html_url); });
+                return $card;
             };
             return Repositories;
         }());
