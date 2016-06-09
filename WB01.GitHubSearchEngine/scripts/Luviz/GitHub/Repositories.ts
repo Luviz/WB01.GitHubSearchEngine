@@ -89,7 +89,7 @@
 
 
 		GetIssueCard(issue) {
-			var $card = $('<span class="ms-ListItem-secondaryText">');
+			var $card = $('<span class="ms-ListItem-secondaryText issue">');
 			$card.append(issue.title);
 
 			//contributions

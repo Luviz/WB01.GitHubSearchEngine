@@ -163,7 +163,7 @@ var Luviz;
                 return $card;
             };
             Repositories.prototype.GetIssueCard = function (issue) {
-                var $card = $('<span class="ms-ListItem-secondaryText">');
+                var $card = $('<span class="ms-ListItem-secondaryText issue">');
                 $card.append(issue.title);
                 //contributions
                 var $info = $('<div class="ms-ListItem-tertiaryText">');

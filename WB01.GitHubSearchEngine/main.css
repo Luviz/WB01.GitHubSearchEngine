@@ -17,7 +17,7 @@
 .user{
 	padding-bottom: 1px
 }
-.user:hover {
+.user:hover, .issue:hover {
 	background-color: #eaeaea;
 }
 .user-img{
@@ -28,3 +28,4 @@
 #clabList span > div{
 	padding-top:5px;
 }
+
