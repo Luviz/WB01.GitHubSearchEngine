@@ -109,6 +109,8 @@ var Luviz;
                 $("#IWatc>span").text(this.Repo.watchers);
                 $("#ILang>span").text(this.Repo.language);
                 $("#ISubs>span").text(this.Repo.subscribers_count);
+                //bind callout with user
+                GitHub.User.BindCallOut("calloutUser");
                 //Collaborators
                 $.getJSON(this.Repo.contributors_url, function (data) {
                     //console.log(data);
@@ -186,6 +188,87 @@ var Luviz;
             return Repositories;
         }());
         GitHub.Repositories = Repositories;
+    })(GitHub = Luviz.GitHub || (Luviz.GitHub = {}));
+})(Luviz || (Luviz = {}));
+var Luviz;
+(function (Luviz) {
+    var GitHub;
+    (function (GitHub) {
+        var User = (function () {
+            function User(login) {
+                var _this = this;
+                //Look for user in session storage
+                var storedUser = sessionStorage.getItem("Luviz.GitHub.User." + login);
+                User.clearCallOut();
+                if (storedUser == null) {
+                    console.log("getting " + login + " from gitHub");
+                    $.getJSON("https://api.github.com/users/" + login, function (user) {
+                        _this.Name = user.name;
+                        _this.Avatar = user.avatar_url;
+                        _this.PubRepos = user.public_repos;
+                        _this.Type = user.type;
+                        _this.Location = user.location;
+                        //write to Session storege
+                        sessionStorage.setItem("Luviz.GitHub.User." + login, JSON.stringify(_this));
+                    }).then(function () { User.updateCallOut(_this); });
+                }
+                else {
+                    //handle the stored User
+                    //parse User to User Obj
+                    console.log("Geting user from storage");
+                    storedUser = JSON.parse(storedUser);
+                    this.Name = storedUser.Name;
+                    this.Avatar = storedUser.Avatar;
+                    this.PubRepos = storedUser.PubRepos;
+                    this.Type = storedUser.Type;
+                    this.Location = storedUser.Location;
+                    User.updateCallOut(this);
+                }
+            }
+            User.BindCallOut = function (id) {
+                var $co = $("#" + id);
+                var $Owner = $("#IOwner");
+                $co.hide();
+                $co.attr("data-login", $Owner.text().toString());
+                $co.attr("data-updated", "false");
+                $Owner.hover(function () {
+                    $co.fadeIn("slow");
+                    if ($co.attr("data-updated") == "false") {
+                        $co.attr("data-updated", "true");
+                        console.log("updateing calloutUser");
+                        new User($("#IOwner").text());
+                    }
+                }, function () { $co.fadeOut("fast"); });
+            };
+            User.updateCallOut = function (user) {
+                console.log(user);
+                user.Name;
+                if (user.Name != null) {
+                    $("#COName").text(user.Name);
+                }
+                if (user.Avatar != null) {
+                    $("#COAvatar").attr("src", user.Avatar);
+                }
+                if (user.Location != null) {
+                    $("#COLocation").text("location: " + user.Location);
+                }
+                if (user.PubRepos != null) {
+                    $("#COPubRepos").text("Public repos: " + user.PubRepos);
+                }
+                if (user.Type != null) {
+                    $("#COType").text("type: " + user.Type);
+                }
+            };
+            User.clearCallOut = function () {
+                $("#COAvatar").attr("src", "http://ahmed-badawy.com/blog/wp-content/uploads/2015/03/github-logo-160x160.jpg");
+                $("#COName").text("Unkown");
+                $("#COLocation").text("location: unkown");
+                $("#COPubRepos").text("Public repos: unkown");
+                $("#COType").text("type: unkown");
+            };
+            return User;
+        }());
+        GitHub.User = User;
     })(GitHub = Luviz.GitHub || (Luviz.GitHub = {}));
 })(Luviz || (Luviz = {}));
 var Luviz;

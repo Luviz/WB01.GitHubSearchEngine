@@ -16,7 +16,9 @@
 			});
 		}
 
-		UpdateCard() {
+        UpdateCard() {
+            
+
 			//Setting the the new url for the model
 			$(".modal-footer > a").attr("href", this.Repo.html_url);
 
@@ -24,8 +26,12 @@
 			$("#IFork>span").text(this.Repo.forks);
 			$("#IWatc>span").text(this.Repo.watchers);
 			$("#ILang>span").text(this.Repo.language);
-			$("#ISubs>span").text(this.Repo.subscribers_count);
-			//Collaborators
+            $("#ISubs>span").text(this.Repo.subscribers_count);
+
+            //bind callout with user
+            User.BindCallOut("calloutUser");
+
+            //Collaborators
 			$.getJSON(this.Repo.contributors_url, (data) => {
 				//console.log(data);
 				var $clabList = $('#clabList');
@@ -113,7 +119,6 @@
 			return $card;
 
 		}
-
-
+        
 	}
 }

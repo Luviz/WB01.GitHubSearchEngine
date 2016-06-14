@@ -165,10 +165,14 @@
     <TypeScriptCompile Include="scripts\Luviz\GitHub\Repositories.ts" />
     <TypeScriptCompile Include="scripts\Luviz\GitHub\Search\Item.ts" />
     <TypeScriptCompile Include="scripts\Luviz\GitHub\Search\Items.ts" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <TypeScriptCompile Include="scripts\Luviz\GitHub\User.ts" />
     <TypeScriptCompile Include="scripts\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="scripts\typings\knockout\knockout.d.ts" />
     <TypeScriptCompile Include="scripts\typings\knockout\tests\jasmine.extensions.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\promise\promise.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

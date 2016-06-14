@@ -18,7 +18,7 @@
 
 		static GetDetail(fullName) {
 			//console.log("GetDetail " + fullName);	
-			var repo = new Repositories(fullName);
+            var repo = new Repositories(fullName);
 		}
 	}
 }
