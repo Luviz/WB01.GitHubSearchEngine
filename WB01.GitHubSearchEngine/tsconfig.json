@@ -14,9 +14,11 @@
   ],
   "files": [
     "scripts/typings/jquery/jquery.d.ts",
+    "scripts/typings/promise/promise.d.ts",
     "scripts/Luviz/GitHub/Search/Item.ts",
     "scripts/Luviz/GitHub/Search/Items.ts",
     "scripts/Luviz/GitHub/Repositories.ts",
+    "scripts/Luviz/GitHub/User.ts",
     "scripts/Luviz/GitHub/Core.ts"
   ]
 }

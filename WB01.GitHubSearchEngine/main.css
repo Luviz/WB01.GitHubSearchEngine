@@ -29,4 +29,10 @@
 	padding-top:5px;
 }
 
+#IOwner:hover {
+	background-color: #eaeaea;
+}
 
+#COAvatar{
+    max-height:160px;
+}

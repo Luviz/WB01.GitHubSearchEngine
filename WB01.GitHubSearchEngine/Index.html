@@ -1,126 +1,147 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<meta charset="utf-8" />
-	<link href="Content/fabric.min.css" rel="stylesheet" />
-	<link href="Content/fabric.components.min.css" rel="stylesheet" />
-	<script src="scripts/jquery-2.2.3.min.js"></script>
-	<script src="scripts/jquery.fabric.js"></script>
-	<link href="main.css" rel="stylesheet" />
-	<!-- BOOTSTRAP -->
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="Content/fabric.min.css" rel="stylesheet" />
+    <link href="Content/fabric.components.min.css" rel="stylesheet" />
+    <script src="scripts/jquery-2.2.3.min.js"></script>
+    <script src="scripts/jquery.fabric.js"></script>
+    <link href="main.css" rel="stylesheet" />
+    <!-- BOOTSTRAP -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </head>
 <body>
 
-	<div id="DOM" class="ms-Grid">
-		<div class="ms-Grid-row">
-			<div class="ms-Grid-col ms-u-md12">
-				<input type="text" class="ms-TextField-field" id="SearchBar-Input" placeholder="Search Repositories [wait 1 sec]" />
-			</div>
-		</div>
-		<div class="ms-Grid-row">
-			<div class="ms-Grid-col ms-u-md3 ">
-			</div>
-			<div id="container" class="ms-Grid-col ms-u-lg6">
+    <div id="DOM" class="ms-Grid">
+        <div class="ms-Grid-row">
+            <div class="ms-Grid-col ms-u-md12">
+                <input type="text" class="ms-TextField-field" id="SearchBar-Input" placeholder="Search Repositories [wait 1 sec]" />
+            </div>
+        </div>
+        <div class="ms-Grid-row">
+            <div class="ms-Grid-col ms-u-md3 ">
+            </div>
+            <div id="container" class="ms-Grid-col ms-u-lg6">
 
-			</div>
-		</div>
+            </div>
+        </div>
 
-	</div>
+    </div>
 
-	<!-- Modal -->
-	<div class="modal fade" id="dModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title ms-ListItem-primaryText" id="mRepoTitle">
-						<b>Repo title</b>
-					</h4>
-				</div>
-				<div id="mBody" class="modal-body">
-					<div class="ms-Grid">
-						<div class="ms-Grid-row">
-							<div class="ms-Grid-col ms-u-md4">
-								<span class="ms-ListItem-primaryText">Information</span>
-								<hr />
-								<div class="ms-ListItem-primaryText ms-font-l" id="IOwner">
-									Unkonwn
-								</div>
-								<div id="IFork">Forks: <span></span> </div>
-								<div id="IWatc">Watchers: <span></span></div>
-								<div id="ILang">Language: <span></span></div>
-								<div id="ISubs">Subscribers: <span></span></div>
-							</div>
-							<div class="ms-Grid-col ms-u-md4">
-								<span class="ms-ListItem-primaryText">Collaborators</span>
-								<hr />
-								<div id="clabList">
-									<!-- to be genrated -->
-								</div>
-							</div>
-							<div class="ms-Grid-col ms-u-md4">
-								<span class="ms-ListItem-primaryText">Issues</span>
-								<hr />
-								<div id="issuList">
-									<!-- to be genrated -->
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<a href="#" class="ms-Button ms-Button--primary">
-						<span class="ms-Button-label">To Repositori</span>
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script src="scripts/Luviz.Core.js"></script>
-	<script>
-		var $SearchBox = $("#SearchBar-Input");
-		/*SearchBox - run on enter*/
-		$SearchBox.keyup(function (event) {
-			if (event.keyCode == 13) {
-				console.log($SearchBox.val());
-				new Luviz.GitHub.Core().GitSearch($SearchBox.val());
-			}
-		});
+    <!-- Modal -->
+    <div class="modal fade" id="dModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title ms-ListItem-primaryText" id="mRepoTitle">
+                        <b>Repo title</b>
+                    </h4>
+                </div>
+                <div id="mBody" class="modal-body">
+                    <div class="ms-Grid">
+                        <div class="ms-Grid-row">
+                            <div class="ms-Grid-col ms-u-md4">
+                                <span class="ms-ListItem-primaryText">Information</span>
+                                <hr />
+                                <div class="ms-Grid-row">
+                                    <div class="ms-Grid-col">
+                                        <div class="ms-ListItem-primaryText ms-font-l" id="IOwner">
+                                            Unkonwn
+                                        </div>
+                                    </div>
+                                    <div style="margin-left:150px; margin-top:-50px">
+                                        <div id="calloutUser" class="ms-Callout ms-Callout--actionText ms-Callout--arrowLeft" style="position:absolute; z-index:9999; width:500px ">
+                                            <div class="ms-Callout-main">
+                                                <div class="ms-Callout-header">
+                                                    <img id="COAvatar" src="https://avatars.githubusercontent.com/u/4950894?v=3" />
+                                                    <p id="COName" class="ms-Callout-title">unkown</p>
+                                                </div>
+                                                <div class="ms-Callout-inner">
+                                                    <div class="ms-Callout-content">
+                                                        <p id="COLocation" class="ms-Callout-subText ms-Callout-subText--s">location: unkown</p>
+                                                        <p id="COPubRepos" class="ms-Callout-subText ms-Callout-subText--s">Public repos: unkown</p>
+                                                        <p id="COType" class="ms-Callout-subText ms-Callout-subText--s">type: unkown</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="IFork">Forks: <span></span> </div>
+                                <div id="IWatc">Watchers: <span></span></div>
+                                <div id="ILang">Language: <span></span></div>
+                                <div id="ISubs">Subscribers: <span></span></div>
+                            </div>
+                            <div class="ms-Grid-col ms-u-md4">
+                                <span class="ms-ListItem-primaryText">Collaborators</span>
+                                <hr />
+                                <div id="clabList">
+                                    <!-- to be genrated -->
+                                </div>
+                            </div>
+                            <div class="ms-Grid-col ms-u-md4">
+                                <span class="ms-ListItem-primaryText">Issues</span>
+                                <hr />
+                                <div id="issuList">
+                                    <!-- to be genrated -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="ms-Button ms-Button--primary">
+                        <span class="ms-Button-label">To Repositori</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/Luviz.Core.js"></script>
+    <script>
+        var $SearchBox = $("#SearchBar-Input");
+        /*SearchBox - run on enter*/
+        $SearchBox.keyup(function (event) {
+            if (event.keyCode == 13) {
+                console.log($SearchBox.val());
+                new Luviz.GitHub.Core().GitSearch($SearchBox.val());
+            }
+        });
 
-		/*SearchBox run post 1sec delay*/
-		//setup before functions
-		var typingTimer;                //timer identifier
-		var doneTypingInterval = 1000;  
+        /*SearchBox run post 1sec delay*/
+        //setup before functions
+        var typingTimer;                //timer identifier
+        var doneTypingInterval = 1000;
 
-		//on keyup, start the countdown
-		$SearchBox.on('keyup', function () {
-			clearTimeout(typingTimer);
-			typingTimer = setTimeout(doneTyping, doneTypingInterval);
-		});
+        //on keyup, start the countdown
+        $SearchBox.on('keyup', function () {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        });
 
-		//on keydown, clear the countdown 
-		$SearchBox.on('keydown', function () {
-			clearTimeout(typingTimer);
-		});
+        //on keydown, clear the countdown
+        $SearchBox.on('keydown', function () {
+            clearTimeout(typingTimer);
+        });
 
-		//user is "finished typing," do something
-		function doneTyping() {
-			//check if it has value
-			if ($SearchBox.val().length > 0) {
-				new Luviz.GitHub.Core().GitSearch($SearchBox.val());
-			} else {
-				//clear if not
-				$("#container").empty();
-			}
-		}
-	
-	</script>
+        //user is "finished typing," do something
+        function doneTyping() {
+            //check if it has value
+            if ($SearchBox.val().length > 0) {
+                new Luviz.GitHub.Core().GitSearch($SearchBox.val());
+            } else {
+                //clear if not
+                $("#container").empty();
+            }
+        }
+
+    </script>
 </body>
 </html>
